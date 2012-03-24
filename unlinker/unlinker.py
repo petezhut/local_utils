@@ -4,7 +4,7 @@ import os
 import sys
 import shutil
 
-def moveIfLink(item):
+def moveLink(item):
     try:
         if os.path.islink(item):
             rp = os.path.realpath(item)
@@ -19,12 +19,11 @@ def moveIfLink(item):
 def readDir(**kwargs):
     startingDir = kwargs.get('startingDir', os.getcwd())
     os.chdir(kwargs['dir'])
-    print("Dir: %s" % (os.path.abspath(kwargs['dir'])))
+    print("Current Dir: %s" % (os.path.abspath(os.getcwd())))
     for item in os.listdir("."):
-        if os.path.isdir(item) and not os.path.islink(item):
+        if os.path.isdir(item): 
             readDir(dir=item, startingDir=startingDir)
-        else:
-            moveIfLink(item)
+        moveLink(item)
     os.chdir(startingDir)
 
 if __name__ == '__main__':
