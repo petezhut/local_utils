@@ -21,6 +21,9 @@ class ReadConfig(object):
                 setattr(section, k.strip(), v.strip())
 
     def read(self, cfg):
+        """
+        read(configfile) -> This loads a configfile into the object
+        """
         try:
             f = open(cfg, 'rb')
             self.__load(map(lambda x: x.strip(), f.readlines()))
@@ -29,12 +32,24 @@ class ReadConfig(object):
             raise StandardError("Couldn't find config file: %s" % (cfg))
 
     def get_sections(self):
+        """
+        get_sections() -> Returns a list of the sections from the loaded config file.
+        """
         return self.sections
 
     def has_section(self, section='DEFAULT'):
+        """
+        has_section(section_name) -> Returns a boolean for the presence of a section.
+        If no section name is passed, it defaults to 'DEFAULT' as the section name.
+        """
         return section.strip() in self.sections
 
     def get_items(self, section='DEFAULT'):
+        """
+        get_items(section_name) -> Returns the dictionary of items found with in the 
+        specified section.  If no section name is passed, it defaults to 'DEFAULT' as 
+        the section name.
+        """
         return self.__dict__[section].__dict__
 
 if __name__ == '__main__':
