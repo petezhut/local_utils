@@ -10,4 +10,5 @@ So my reader does the same thing, this way:
 
 import ReadConfig
 config = ReadConfig.ReadConfig(configfile)
+config.read(configfile)
 config.section.item

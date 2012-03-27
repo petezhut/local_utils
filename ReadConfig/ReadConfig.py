@@ -5,11 +5,12 @@ class Section:
         return self.__dict__.has_key(item)
 
 class ReadConfig(object):
+    """
+    ReadConfig - An improved config parser.
+    """
     sections = []
-
-    def __init__(self, cfg):
-        f = open(cfg, 'rb')
-        for line in filter(None, map(lambda x: x.strip(), f.readlines())):
+    def __load(self, lines):
+        for line in filter(None, lines):
             if line.startswith("["):
                 cursec = line.split("[")[-1].split("]")[0]
                 self.sections.append(cursec)
@@ -18,6 +19,14 @@ class ReadConfig(object):
             else:
                 k,v = line.split("=")
                 setattr(section, k.strip(), v.strip())
+
+    def read(self, cfg):
+        try:
+            f = open(cfg, 'rb')
+            self.__load(map(lambda x: x.strip(), f.readlines()))
+            f.close()
+        except IOError, e:
+            raise StandardError("Couldn't find config file: %s" % (cfg))
 
     def get_sections(self):
         return self.sections
@@ -28,11 +37,12 @@ class ReadConfig(object):
     def get_items(self, section='DEFAULT'):
         return self.__dict__[section].__dict__
 
-    def __get_attribute__(self, item):
-        print("CALLED")
-
 if __name__ == '__main__':
-    R = ReadConfig("test.cfg")
+    R = ReadConfig()
+#    R.read()
+#    R.read("nope.cfg")
+    R.read("test.cfg")
+
     print("%s, %s" % (R.DEFAULT.lname, R.DEFAULT.fname))
     print(R.get_sections())
     if R.testnames.has_item('t1'):
