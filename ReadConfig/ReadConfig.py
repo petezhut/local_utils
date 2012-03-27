@@ -2,13 +2,18 @@
 
 class Section:
     def has_item(self, item):
-        return self.__dict__.has_key(item)
+        return hasattr(self, item)
+
+    def __getitem__(self, item):
+        return self.__dict__[item]
 
 class ReadConfig(object):
     """
     ReadConfig - An improved config parser.
     """
-    sections = []
+    def __init__(self):
+        self.sections = []
+
     def __load(self, lines):
         for line in filter(None, lines):
             if line.startswith("["):
@@ -52,20 +57,14 @@ class ReadConfig(object):
         """
         return self.__dict__[section].__dict__
 
-if __name__ == '__main__':
-    R = ReadConfig()
-#    R.read()
-#    R.read("nope.cfg")
-    R.read("test.cfg")
+    def __getitem__(self, item):
+        return self.__dict__[item]
 
-    print("%s, %s" % (R.DEFAULT.lname, R.DEFAULT.fname))
-    print(R.get_sections())
-    if R.testnames.has_item('t1'):
-        print("-")
-        print(R.testnames.t1)
-        print("-")
-    if R.testnames.has_item('tx'):
-        print(R.testnames.tx)
-    print(R.get_items('testnames'))
-    print(R.get_items('test'))
-    print(R.get_items())
+if __name__ == "__main__":
+    C = ReadConfig()
+    C.read("feature_test.cfg")
+    print(C.get_sections())
+    print(C.DEFAULT['fname'])
+    print(C.DEFAULT.fname)
+    print(C['DEFAULT'].fname)
+    print(C['DEFAULT']['fname'])
