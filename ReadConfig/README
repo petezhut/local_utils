@@ -1,0 +1,13 @@
+This is (IMHO) improved ConfigReader for python.
+I never liked the mindset of the SML ConfigReader:
+
+import ConfigReader
+config = ConfigReader.ConfigReader()
+config.read(configfile)
+config.get(section, item)
+
+So my reader does the same thing, this way:
+
+import ReadConfig
+config = ReadConfig.ReadConfig(configfile)
+config.section.item
