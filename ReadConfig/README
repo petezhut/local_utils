@@ -1,10 +1,10 @@
 This is (IMHO) improved ConfigReader for python.
-I never liked the mindset of the SML ConfigReader:
+I never liked the mindset of the STL ConfigReader:
 
 import ConfigReader
 config = ConfigReader.ConfigReader()
 config.read(configfile)
-config.get(section, item)
+config.get(section, item) <- This is what always annoyed me.  Seems un-pythonic.
 
 So my reader does the same thing, this way:
 
