@@ -5,4 +5,6 @@ I wrote it to be a very simplistic back script for my novel writing.
 Maybe you can use it too.
 
 The big thing to know is the full path of the local directory you want to 
-back up, and the remote location you want to back up to.
+back up, and the full path of th remote location you want to back up to.
+
+It makes use of my ConfigReader (https://github.com/petezhut/ConfigReader).
