@@ -23,14 +23,16 @@ def handleLink(item, action):
         print(str(e))
 
 def readDir(**kwargs):
-    startingDir = kwargs.get('startingDir', os.getcwd())
+    startingDir = kwargs.get('startingDir', kwargs['dir'])
     os.chdir(kwargs['dir'])
     print("Current Working Dir: %s" % (os.path.abspath(os.getcwd())))
     for item in os.listdir("."):
-        if os.path.isdir(item): 
-            readDir(dir=item, startingDir=startingDir)
-        handleLink(item, kwargs['action'])
+        if os.path.islink(item):
+            handleLink(item, kwargs['action'])
+        elif os.path.isdir(item):
+            readDir(action=action, dir=item, startingDir=os.path.abspath(os.getcwd()))
     os.chdir(startingDir)
+
 
 if __name__ == '__main__':
     try:
